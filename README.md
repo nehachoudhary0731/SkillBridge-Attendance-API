@@ -1,14 +1,14 @@
 # SkillBridge Attendance API
 
-A backend REST API for a state-level skilling programme attendance management system. Built with FastAPI, PostgreSQL (Neon), and deployed on Railway.
+A backend REST API for a state-level skilling programme attendance management system. Built with FastAPI, PostgreSQL (Neon), and deployed on  Render.
 
 ---
 
 ## Live API
 
-**Base URL:** `http://localhost:8000`
+**Base URL:** ` https://skillbridge-attendance-api-pckr.onrender.com`
 
-> If the service is sleeping (Railway free tier), the first request might take 10–15 seconds to respond. Just retry once.
+> If the service is sleeping ( Render free tier), the first request might take 10–15 seconds to respond. Just retry once.
 
 ---
 
@@ -71,14 +71,14 @@ These are created by the seed script:
 
 **Signup:**
 ```bash
-curl -X POST http://localhost:8000/auth/signup \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/auth/signup \
   -H "Content-Type: application/json" \
   -d '{"name": "Test User", "email": "test@example.com", "password": "pass1234", "role": "student"}'
 ```
 
 **Login (save the token):**
 ```bash
-curl -X POST http://localhost:8000/auth/login \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "student01@skillbridge.com", "password": "student@1234"}'
 ```
@@ -94,7 +94,7 @@ TOKEN="<paste access_token here>"
 
 **Create a batch (Trainer or Institution):**
 ```bash
-curl -X POST http://localhost:8000/batches \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/batches \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name": "New Batch", "institution_id": "bbb61611-ae8e-44e3-b20e-b8955f3b44b5"}'
@@ -102,13 +102,13 @@ curl -X POST http://localhost:8000/batches \
 
 **Generate invite token (Trainer):**
 ```bash
-curl -X POST http://localhost:8000/batches/fc1ffa12-e4d5-48cd-8b28-96a318d37b63/invite \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/batches/fc1ffa12-e4d5-48cd-8b28-96a318d37b63/invite \
   -H "Authorization: Bearer $TOKEN"
 ```
 
 **Join a batch (Student):**
 ```bash
-curl -X POST http://localhost:8000/batches/join \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/batches/join \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"token": "<invite_token>"}'
@@ -116,7 +116,7 @@ curl -X POST http://localhost:8000/batches/join \
 
 **Batch summary (Institution):**
 ```bash
-curl http://localhost:8000/batches/fc1ffa12-e4d5-48cd-8b28-96a318d37b63/summary \
+curl https://skillbridge-attendance-api-pckr.onrender.com/batches/fc1ffa12-e4d5-48cd-8b28-96a318d37b63/summary \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -126,7 +126,7 @@ curl http://localhost:8000/batches/fc1ffa12-e4d5-48cd-8b28-96a318d37b63/summary 
 
 **Create a session (Trainer):**
 ```bash
-curl -X POST http://localhost:8000/sessions \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/sessions \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -140,7 +140,7 @@ curl -X POST http://localhost:8000/sessions \
 
 **View session attendance (Trainer):**
 ```bash
-curl http://localhost:8000/sessions/eb779220-f53a-468d-b950-bc1bfd18ac55/attendance \
+curl https://skillbridge-attendance-api-pckr.onrender.com/sessions/eb779220-f53a-468d-b950-bc1bfd18ac55/attendance \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -150,7 +150,7 @@ curl http://localhost:8000/sessions/eb779220-f53a-468d-b950-bc1bfd18ac55/attenda
 
 **Mark attendance (Student):**
 ```bash
-curl -X POST http://localhost:8000/attendance/mark \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/attendance/mark \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"session_id": "eb779220-f53a-468d-b950-bc1bfd18ac55", "status": "present"}'
@@ -162,13 +162,13 @@ curl -X POST http://localhost:8000/attendance/mark \
 
 **Programme-wide summary (Programme Manager):**
 ```bash
-curl http://localhost:8000/programme/summary \
+curl https://skillbridge-attendance-api-pckr.onrender.com/programme/summary \
   -H "Authorization: Bearer $TOKEN"
 ```
 
 **Institution summary (Programme Manager):**
 ```bash
-curl http://localhost:8000/institutions/bbb61611-ae8e-44e3-b20e-b8955f3b44b5/summary \
+curl https://skillbridge-attendance-api-pckr.onrender.com/institutions/bbb61611-ae8e-44e3-b20e-b8955f3b44b5/summary \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -180,7 +180,7 @@ The Monitoring Officer uses a two-step auth flow. First login normally, then exc
 
 **Step 1: Login as monitoring officer**
 ```bash
-curl -X POST http://localhost:8000/auth/login \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "monitor@skillbridge.com", "password": "monitor@1234"}'
 
@@ -189,7 +189,7 @@ curl -X POST http://localhost:8000/auth/login \
 
 **Step 2: Get a scoped monitoring token**
 ```bash
-curl -X POST http://localhost:8000/auth/monitoring-token \
+curl -X POST https://skillbridge-attendance-api-pckr.onrender.com/auth/monitoring-token \
   -H "Authorization: Bearer $MO_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"key": "monitor-secret-key-123"}'
@@ -199,7 +199,7 @@ curl -X POST http://localhost:8000/auth/monitoring-token \
 
 **Step 3: Hit the monitoring endpoint**
 ```bash
-curl http://localhost:8000/monitoring/attendance \
+curl https://skillbridge-attendance-api-pckr.onrender.com/monitoring/attendance \
   -H "Authorization: Bearer $MON_TOKEN"
 ```
 

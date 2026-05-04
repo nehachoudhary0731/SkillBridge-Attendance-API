@@ -1,4 +1,7 @@
-Full Name:    [Your Full Name]
-Email:        [your.email@example.com]
-Phone:        [+91 XXXXXXXXXX]
-GitHub:       https://github.com/[your-username]
+Full Name:    Neha Choudhary
+Email:        nehac0276@gmail.com
+Phone:        9507245494
+GitHub:       https://github.com/nehachoudhary0731
+Challenges: Deployed on Render. Had to explicitly set the Python version via environment 
+variables (`PYTHON_VERSION=3.11.9`) to match the local environment as
+ without it the build was defaulting to a version that broke a dependency.

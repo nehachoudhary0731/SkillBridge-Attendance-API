@@ -1,0 +1,4 @@
+Full Name:    [Your Full Name]
+Email:        [your.email@example.com]
+Phone:        [+91 XXXXXXXXXX]
+GitHub:       https://github.com/[your-username]

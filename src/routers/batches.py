@@ -25,8 +25,8 @@ def create_batch(
     db.add(batch)
     db.flush()
 
-    if current_user.role == RoleEnum.trainer:
-        bt = BatchTrainer(batch_id=batch.id, trainer_id=current_user.id)
+    if current_user["role"] == RoleEnum.trainer:
+        bt = BatchTrainer(batch_id=batch.id, trainer_id=current_user["sub"])
         db.add(bt)
 
     db.commit()
@@ -48,7 +48,7 @@ def create_invite(
     invite = BatchInvite(
         batch_id=batch_id,
         token=token,
-        created_by=current_user.id,
+        created_by=current_user["sub"],
         expires_at=datetime.utcnow() + timedelta(days=7),
         used=False,
     )
@@ -73,12 +73,12 @@ def join_batch(
 
     existing = db.query(BatchStudent).filter(
         BatchStudent.batch_id == invite.batch_id,
-        BatchStudent.student_id == current_user.id,
+        BatchStudent.student_id == current_user["sub"],
     ).first()
     if existing:
         raise HTTPException(status_code=422, detail="Already a member of this batch")
 
-    bs = BatchStudent(batch_id=invite.batch_id, student_id=current_user.id)
+    bs = BatchStudent(batch_id=invite.batch_id, student_id=current_user["sub"])
     db.add(bs)
     invite.used = True
     db.commit()

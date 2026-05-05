@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from src.db.connect_to_db import get_db
 from src.db.models import Batch, BatchTrainer, BatchStudent, BatchInvite, Institution, Attendance, RoleEnum
 from src.db.schemas import BatchCreate, JoinBatchRequest
@@ -49,7 +49,7 @@ def create_invite(
         batch_id=batch_id,
         token=token,
         created_by=current_user["sub"],
-        expires_at=datetime.utcnow() + timedelta(days=7),
+        expires_at=datetime.now(timezone.utc) + timedelta(days=7),
         used=False,
     )
     db.add(invite)
@@ -68,7 +68,7 @@ def join_batch(
         raise HTTPException(status_code=404, detail="Invalid invite token")
     if invite.used:
         raise HTTPException(status_code=422, detail="Invite token already used")
-    if invite.expires_at < datetime.utcnow():
+    if invite.expires_at < datetime.now(timezone.utc):
         raise HTTPException(status_code=422, detail="Invite token expired")
 
     existing = db.query(BatchStudent).filter(
